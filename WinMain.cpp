@@ -57,7 +57,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     );
 
     //ventan creada, se debe mostrar con una funcion
-    
+    ShowWindow(win_manipulator, SW_SHOWDEFAULT);
 
 
 }
