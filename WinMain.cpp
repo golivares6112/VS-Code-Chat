@@ -34,7 +34,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     wincl.cbClsExtra = 0;                      /* Sin información adicional para la */
     wincl.cbWndExtra = 0;                      /* clase o la ventana */
     /* Usar el color de fondo por defecto para la ventana */
-    wincl.hbrBackground = GetSysColorBrush(COLOR_DESKTOP);
+    wincl.hbrBackground = GetSysColorBrush(COLOR_GRAYTEXT);
 
     /* Registrar la clase de ventana, si falla, salir del programa */
     if(!RegisterClassEx(&wincl)) return 0;
