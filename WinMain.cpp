@@ -72,3 +72,5 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     return messages.wParam;
 
 }
+
+LRESULT CALLBACK
