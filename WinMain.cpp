@@ -59,7 +59,6 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     //ventan creada, se debe mostrar con una funcion
     ShowWindow(win_manipulator, SW_SHOWDEFAULT);
 
-<<<<<<< HEAD
     /* Bucle de mensajes, se ejecuta hasta que haya error o GetMessage devuelva FALSE */
     while(TRUE == GetMessage(&messages, NULL, 0, 0))
     {
@@ -71,13 +70,4 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
 
     /* Salir con valor de retorno */
     return messages.wParam;
-
 }
-
-LRESULT CALLBACK
-=======
-    
-
-
-}
->>>>>>> 37aef81f8215808a7fbf9a74290ab2412e7c51f5
