@@ -43,7 +43,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     hwnd = CreateWindowEx(
            0,                   /* Posibilidades de variación */
            L"WINDOWS_CLASS",     /* Nombre de la clase */
-           L"Ejemplo 001",       /* Texto del título */
+           L"Programa de Chat",  /* Texto del título */
            WS_OVERLAPPEDWINDOW, /* Tipo por defecto */
            CW_USEDEFAULT,       /* Windows decide la posición */
            CW_USEDEFAULT,       /* donde se coloca la ventana */
