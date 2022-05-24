@@ -2,6 +2,8 @@
 #define UNICODE
 #endif
 
+//DEFINICION DE UNICODE ARRIBA
+
 #include <windows.h>
 
 /*  Declaración del procedimiento de ventana  */
@@ -65,7 +67,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
         DispatchMessage(&mensaje);
     }
 
-    
+
 
     /* Salir con valor de retorno */
     return mensaje.wParam;
