@@ -74,7 +74,8 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 }
 
 
-/*  Esta función es invocada por la función DispatchMessage()  */
+
+/*  Esta función es invocada por la función DispatchMessage()  - funcion propietaria de cada ventana, dialogo, o que herede de ello*/
 LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT mensaje, WPARAM wParam, LPARAM lParam)
 {
     switch (mensaje)                  /* manipulador de mensaje */
