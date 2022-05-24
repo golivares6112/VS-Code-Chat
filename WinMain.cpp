@@ -2,9 +2,14 @@
 #define UNICODE
 #endif
 
-//DEFINICION DE UNICODE ARRIBA blblabla 
+#define CM_MENSAJE 100
+#define CM_SALIR  101
+
 
 #include <windows.h>
+
+//prototipo menu
+void InsertarMenu(HWND hWnd);
 
 /*  Declaración del procedimiento de ventana  */
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
@@ -55,6 +60,9 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
            NULL                 /* No hay datos de creación de ventana */
     );
 
+    /* Insertar menu */
+    InsertarMenu(hwnd);
+
     /* Mostrar la ventana */
     ShowWindow(hwnd, SW_SHOWDEFAULT);
 
@@ -89,3 +97,20 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT mensaje, WPARAM wParam, LPARAM
 
     return 0;
 }
+
+void InsertarMenu(HWND hWnd)
+{
+   HMENU hMenu1, hMenu2;
+   
+   hMenu1 = CreateMenu();
+   hMenu2 = CreateMenu();
+
+   AppendMenu(hMenu2, MF_STRING, CM_PRUEBA, L"&Mensaje");
+   AppendMenu(hMenu2, MF_SEPARATOR, 0, NULL);
+   AppendMenu(hMenu2, MF_STRING, CM_SALIR, L"&Salir");
+   AppendMenu(hMenu1, MF_STRING | MF_POPUP, (UINT_PTR)hMenu2, L"&Principal");
+   //AppendMenu(hMenu1, MF_STRING, 200, L"&Secundario");
+   SetMenu (hWnd, hMenu1);  
+}
+
+
