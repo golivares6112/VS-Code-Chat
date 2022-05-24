@@ -1,73 +1,86 @@
-#ifdef UNICODE
+#ifndef UNICODE
 #define UNICODE
 #endif
 
 #include <windows.h>
 
+/*  Declaración del procedimiento de ventana  */
+LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
 
-LRESULT CALLBACK WindProcedure(HWND, UINT, WPARAM, LPARAM);
-
-
-int WINAPI WinMain(HINSTANCE hThisInstance,
-                   HINSTANCE hPrevInstance,
-                   LPSTR lpszArgument,
-                   int nFunsterStil)
+int WINAPI WinMain (HINSTANCE hThisInstance,
+                    HINSTANCE hPrevInstance,
+                    LPSTR lpszArgument,
+                    int nFunsterStil)
 {
-    HWND win_manipulator;
-    MSG messages;
-    WNDCLASSEX wincl;
+    
+    HWND hwnd;               /* Manipulador de ventana */
+    MSG mensaje;             /* Mensajes recibidos por la aplicación */
+    WNDCLASSEX wincl;        /* Estructura de datos para la clase de ventana */
 
-    //definition of the structure
+    /* Estructura de la ventana */
     wincl.hInstance = hThisInstance;
-    wincl.lpszClassName = L"WINDOW_CLASS"; //nombre de la clase de la ventana
-    wincl.lpfnWndProc = WindProcedure; //funcion prototipo
-    wincl.style = CS_DBLCLKS;
-    wincl.cbSize = sizeof(WNDCLASSEX);
+    wincl.lpszClassName = L"WINDOWS_CLASS";
+    wincl.lpfnWndProc = WindowProcedure;      /* Esta función es invocada por Windows */
+    wincl.style = CS_DBLCLKS;               /* Captura los doble-clicks */
+    wincl.cbSize = sizeof (WNDCLASSEX);
 
-    //icon and pointer mouse definition
-    wincl.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-    wincl.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
-    wincl.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wincl.lpszMenuName = NULL;
-    wincl.cbClsExtra = 0;
-    wincl.cbWndExtra = 0;
+    /* Usar icono y puntero por defector */
+    wincl.hIcon = LoadIcon (NULL, IDI_APPLICATION);
+    wincl.hIconSm = LoadIcon (NULL, IDI_APPLICATION);
+    wincl.hCursor = LoadCursor (NULL, IDC_ARROW);
+    wincl.lpszMenuName = NULL;                 /* Sin menú */
+    wincl.cbClsExtra = 0;                      /* Sin información adicional para la */
+    wincl.cbWndExtra = 0;                      /* clase o la ventana */
+    /* Usar el color de fondo por defecto para la ventana */
+    wincl.hbrBackground = GetSysColorBrush(COLOR_DESKTOP);
 
-    //backgroudn color
-    wincl.hbrBackground = GetSysColorBrush(COLOR_GRAYTEXT);
-
-    //structure register
+    /* Registrar la clase de ventana, si falla, salir del programa */
     if(!RegisterClassEx(&wincl)) return 0;
 
-    //it its the class register? then
-    //create the window
-    win_manipulator = CreateWindowEx
-    (
-            0,                   /* Posibilidades de variación */
-            L"WINDOW_CLASS",     /* Nombre de la clase */
-            L"Messenger",       /* Texto del título */
-            WS_OVERLAPPEDWINDOW, /* Tipo por defecto */
-            CW_USEDEFAULT,       /* Windows decide la posición */
-            CW_USEDEFAULT,       /* donde se coloca la ventana */
-            544,                 /* Ancho */
-            375,                 /* Alto en pixels */
-            HWND_DESKTOP,        /* La ventana es hija del escritorio */
-            NULL,                /* Sin menú */
-            hThisInstance,       /* Manipulador de instancia */
-            NULL                 /* No hay datos de creación de ventana */
+    /* La clase está registrada, crear la ventana */
+    hwnd = CreateWindowEx(
+           0,                   /* Posibilidades de variación */
+           L"WINDOWS_CLASS",     /* Nombre de la clase */
+           L"Ejemplo 001",       /* Texto del título */
+           WS_OVERLAPPEDWINDOW, /* Tipo por defecto */
+           CW_USEDEFAULT,       /* Windows decide la posición */
+           CW_USEDEFAULT,       /* donde se coloca la ventana */
+           544,                 /* Ancho */
+           375,                 /* Alto en pixels */
+           HWND_DESKTOP,        /* La ventana es hija del escritorio */
+           NULL,                /* Sin menú */
+           hThisInstance,       /* Manipulador de instancia */
+           NULL                 /* No hay datos de creación de ventana */
     );
 
-    //ventan creada, se debe mostrar con una funcion
-    ShowWindow(win_manipulator, SW_SHOWDEFAULT);
+    /* Mostrar la ventana */
+    ShowWindow(hwnd, SW_SHOWDEFAULT);
 
     /* Bucle de mensajes, se ejecuta hasta que haya error o GetMessage devuelva FALSE */
-    while(TRUE == GetMessage(&messages, NULL, 0, 0))
+    while(TRUE == GetMessage(&mensaje, NULL, 0, 0))
     {
         /* Traducir mensajes de teclas virtuales a mensajes de caracteres */
-        TranslateMessage(&messages);
+        TranslateMessage(&mensaje);
         /* Enviar mensaje al procedimiento de ventana */
-        DispatchMessage(&messages);
+        DispatchMessage(&mensaje);
     }
 
     /* Salir con valor de retorno */
-    return messages.wParam;
+    return mensaje.wParam;
+}
+
+
+/*  Esta función es invocada por la función DispatchMessage()  */
+LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT mensaje, WPARAM wParam, LPARAM lParam)
+{
+    switch (mensaje)                  /* manipulador de mensaje */
+    {
+        case WM_DESTROY:
+            PostQuitMessage (0);       /* Envía el mensaje WM_QUIT a la cola de mensajes */
+            break;
+        default:                      /* Mensajes que no queremos manejar */
+            return DefWindowProc (hwnd, mensaje, wParam, lParam);
+    }
+
+    return 0;
 }
