@@ -91,6 +91,19 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT mensaje, WPARAM wParam, LPARAM
         case WM_DESTROY:
             PostQuitMessage (0);       /* Envía el mensaje WM_QUIT a la cola de mensajes */
             break;
+        case WM_COMMAND:
+            switch (LOWORD(wParam))
+            {
+            case CM_MENSAJE:
+                    MessageBox(hwnd, L"Whatsapp konda from C++, your mami give you a computer for christmas?", L"Comando : Mensaje", MB_OKCANCEL);
+                break;
+            case CM_SALIR:
+                    MessageBox(hwnd, L"Bye Bye Konda, be good Jhonny", L"Comando : Salir", MB_OKCANCEL);
+                    PostQuitMessage(0);
+                break;    
+            default:
+                break;
+            }
         default:                      /* Mensajes que no queremos manejar */
             return DefWindowProc (hwnd, mensaje, wParam, lParam);
     }
@@ -105,7 +118,7 @@ void InsertarMenu(HWND hWnd)
    hMenu1 = CreateMenu();
    hMenu2 = CreateMenu();
 
-   AppendMenu(hMenu2, MF_STRING, CM_PRUEBA, L"&Mensaje");
+   AppendMenu(hMenu2, MF_STRING, CM_MENSAJE, L"&Mensaje");
    AppendMenu(hMenu2, MF_SEPARATOR, 0, NULL);
    AppendMenu(hMenu2, MF_STRING, CM_SALIR, L"&Salir");
    AppendMenu(hMenu1, MF_STRING | MF_POPUP, (UINT_PTR)hMenu2, L"&Principal");
